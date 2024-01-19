@@ -1,7 +1,12 @@
 ```bash
-make dev
+make dev # Run development server
 ```
 
 ```bash
-make build
+make build # Build production binary
 ```
+
+```bash
+make run # Run production server
+```
+
