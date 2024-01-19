@@ -12,21 +12,20 @@ async fn main() {
         .register_template_file(&"dynamic", &"./src/templates/dynamic.hbs")
         .unwrap();
 
-    // let x = format!("123");
     let static_dir = warp::path("static").and(warp::fs::dir("src/static"));
 
     let index = warp::path!()
         .and(warp::query::<HashMap<String, String>>())
         .map(move |map: HashMap<String, String>| {
             let mut data = BTreeMap::new();
-            let val = map.get("fruit");
-            let resolved = String::from("bad apple!");
-            data.insert("fruit", val.unwrap_or(&resolved));
+            let val = map.get("message");
+            let resolved = String::from("No message given. Provide a query param of the form message={yourmessage} to see it!");
+            data.insert("message", val.unwrap_or(&resolved));
             let html = handlebars.render(&"dynamic", &data).unwrap();
             warp::reply::html(html.to_owned())
         });
 
     let full_router = index.or(static_dir);
-    // let hello2 = warp::path!().map(|| format!("Hello, whose agent is "));
+
     warp::serve(full_router).run(([127, 0, 0, 1], 3000)).await;
 }
