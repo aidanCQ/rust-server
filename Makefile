@@ -3,7 +3,7 @@ build:
 dev: 
 	./tailwindcss -i ./src/static/input.css -o ./src/static/output.css --watch &
 	cargo watch -x run
-start: 
+run: 
 	./target/release/rust-server
 
 
